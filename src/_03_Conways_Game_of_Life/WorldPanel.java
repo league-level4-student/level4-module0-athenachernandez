@@ -121,9 +121,18 @@ public class WorldPanel extends JPanel implements MouseListener, ActionListener 
 	//   It returns an int of 8 or less based on how many
 	//   living neighbors there are of the 
 	//   cell identified by x and y
-	public int getLivingNeighbors(int x, int y){
-		int livingNeighbors = x + y;
-		return livingNeighbors;
+	public int getLivingNeighbors(int row, int col){
+		int living = 0;
+		for (int i = 0; i < cells.length; i++) {
+			for (int j = 0; j < cells[i].length; j++) {
+				if (cells[i]) {
+					
+				}
+			}
+		}
+		
+		
+		return living;
 	}
 
 	@Override
