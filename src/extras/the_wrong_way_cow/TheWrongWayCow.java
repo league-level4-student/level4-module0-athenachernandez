@@ -41,19 +41,73 @@
 
 package extras.the_wrong_way_cow;
 
+import java.util.ArrayList;
+
 public class TheWrongWayCow {
 
-    public static int[] findWrongWayCow(final char[][] field) {
-        // Fill in the code to return the x,y coordinate position of the
-        // head (letter 'c') of the wrong way cow!
-        for (int i = 0; i < field.length; i++) {
-        	for (int j = 0; j < field[i].length; j++) {
-        		if (field[i][j] == 'c') {
-        			return new int[] {i, j};
-        		}
-        	}
-        }
-    	
-        return null;
-    }
+	public static int[] findWrongWayCow(final char[][] field) {
+		// Fill in the code to return the x,y coordinate position of the
+		// head (letter 'c') of the wrong way cow!
+		int horizontalCounter = 0;
+		int verticalCounter = 0;
+		int horizontalBackwardsCounter = 0;
+		int verticalBackwardsCounter = 0;
+		int[] horizontalArray = new int[2];
+		int[] verticalArray = new int[2];
+		int[] horizontalBackwardsArray = new int[2];
+		int[] verticalBackwardsArray = new int[2];
+		for (int i = 0; i < field.length; i++) {
+			for (int j = 0; j < field[i].length; j++) {
+				if (j < field[i].length - 2) {
+					if (field[i][j] == 'c' && field[i][j + 1] == 'o' && field[i][j + 2] == 'w') { // cow horizontal
+						horizontalCounter++;
+						horizontalArray[0] = j;
+						horizontalArray[1] = i;
+					}
+					if (field[i][j] == 'w' && field[i][j + 1] == 'o' && field[i][j + 2] == 'c') { // cow backwards
+																									// horizontal
+						horizontalBackwardsCounter++;
+						horizontalBackwardsArray[0] = j+2;
+						horizontalBackwardsArray[1] = i;
+					}
+				}
+				if (i < field.length - 2) {
+					if (field[i][j] == 'c' && field[i + 1][j] == 'o' && field[i + 2][j] == 'w') { // cow vertical
+						verticalCounter++;
+						verticalArray[0] = j;
+						verticalArray[1] = i;
+					}
+					if (field[i][j] == 'w' && field[i + 1][j] == 'o' && field[i + 2][j] == 'c') { // cow backwards
+						// vertical
+						verticalBackwardsCounter++;
+						verticalBackwardsArray[0] = j;
+						verticalBackwardsArray[1] = i+2;
+					}
+				}
+
+			}
+		}
+		ArrayList<Integer> counters = new ArrayList<Integer>();
+		counters.add(horizontalCounter);
+		counters.add(verticalCounter);
+		counters.add(horizontalBackwardsCounter);
+		counters.add(verticalBackwardsCounter);
+		int minIndex = Integer.MAX_VALUE;
+		for (int i = 0; i < counters.size(); i++) {
+			if (counters.get(i) == 1) {
+				minIndex = i;
+			}
+		}
+
+		if (minIndex == 0) {
+			return horizontalArray;
+		} else if (minIndex == 1) {
+			return verticalArray;
+		} else if (minIndex == 2) {
+			return horizontalBackwardsArray;
+		} else {
+			return verticalBackwardsArray;
+		}
+
+	}
 }
